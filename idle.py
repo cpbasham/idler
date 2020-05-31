@@ -1,7 +1,7 @@
 import pygame
  
 from constants import *
-from loading import *
+from Task import *
 #import levels
 
 #from player import Player
@@ -32,7 +32,7 @@ def main():
 
     screen.fill(BLACK)
 
-    tasks = [TimedTask("Task {}".format(x/1), x) for x in range(1, 20, 1)]
+    tasks = [TimedTask("{}".format(int(x/1)), x) for x in range(1, 20, 1)]
     for i, task in enumerate(tasks):
         TaskGUI(task, x=0, y=50*i, width=400, height=50)
 
