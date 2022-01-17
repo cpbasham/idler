@@ -2,6 +2,7 @@ import pygame
  
 from constants import *
 from Task import *
+from TaskGUI import *
 #import levels
 
 #from player import Player
@@ -24,32 +25,34 @@ def main():
     """ Main Program """
     pygame.init()
 
-    # Set the height and width of the screen
-    size = (SCREEN_WIDTH, SCREEN_HEIGHT,)
-    screen = pygame.display.set_mode(size)
+    screen_size = (SCREEN_WIDTH, SCREEN_HEIGHT,)
+    screen_caption = "Idle1"
+    screen_color = BLACK
 
-    pygame.display.set_caption("Idle1")
+    screen = pygame.display.set_mode(screen_size)
+    screen.fill(screen_color)
+    pygame.display.set_caption(screen_caption)
 
-    screen.fill(BLACK)
+    active_sprite_list = []
 
-    tasks = [TimedTask("{}".format(int(x/1)), x) for x in range(1, 20, 1)]
-    for i, task in enumerate(tasks):
-        TaskGUI(task, x=0, y=50*i, width=400, height=50)
-
-    active_sprite_list = [tasks]
-
-    #Loop until the user clicks the close button.
-    done = False
-
-    # Used to manage how fast the screen updates
-    clock = pygame.time.Clock()
+    # Test tasks
+    tasks    = [TimedTask("{}".format(int(x/1)), x) for x in range(1, 10, 1)]
+    taskguis = [TaskGUI(task, x=0, y=50*i, width=400, height=50) for i, task in enumerate(tasks)]
+    taskpane = TaskGUIPane(taskguis, x=300, height=100)
+    active_sprite_list.append(taskpane)
 
     # -------- Main Program Loop -----------
+    clock = pygame.time.Clock()
+    done = False
     while not done:
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
-                done = True # Flag that we are done so we exit this loop
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
 
+
+            elif event.type == pygame.MOUSEWHEEL:
+                print(event)
+                print(event.x, event.y)
 #            if event.type == pygame.KEYDOWN:
 #                if event.key == pygame.K_LEFT:
 #                    player.go_left()
